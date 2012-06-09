@@ -87,10 +87,10 @@ log_fatal(){
 do_log(){
   if [[ ${LOG_PATH} != "UNDEFINED" ]]
   then
-    SEVERIDAD=$1
+    SEVERITY=$1
     shift
-    echo $(date +"%Y/%m/%d %H:%M:%S") - $(printf "%-10s" ${SEVERIDAD}) - $* >> ${LOG_PATH}/${LOG_FILE}
+    echo $(date +"%Y/%m/%d %H:%M:%S") - $(printf "%-10s" ${SEVERITY}) - $* >> ${LOG_PATH}/${LOG_FILE}
   else
-    echo $(date +"%Y/%m/%d %H:%M:%S") - ERROR - "No se ha definido la ruta del fichero de log, revise la documentación" >&2
+    echo $(date +"%Y/%m/%d %H:%M:%S") - ERROR - "No path defined for log file, please review documentation" >&2
   fi
 }
