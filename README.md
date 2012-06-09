@@ -30,14 +30,16 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Setup the library from another script
 ==========
+<pre>
 . ${PATH_TO_SCRIP}/logger.ksh
 LOG_PATH=${PATH_TO_LOG}
 LOG_FILE=filename.log
 LOG_LEVEL=0
+</pre>
 
 Using the functions
 ==========
+<pre>
 log_debug "Message"
-
 log_error "Error message"
-
+</pre>
