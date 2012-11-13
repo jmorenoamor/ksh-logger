@@ -1,40 +1,19 @@
 ##########################################################################################
 # KSH Logger library
-# Log generator for KSH shell scripts
+# Log generator for shell scripts
 #
-# Copyright (c) 2011 Jesús Moreno Amor <jesus@morenoamor.com>
-#
-# Permission is hereby granted, free of charge, to any
-# person obtaining a copy of this software and associated
-# documentation files (the "Software"), to deal in the
-# Software without restriction, including without limitation
-# the rights to use, copy, modify, merge, publish,
-# distribute, sublicense, and/or sell copies of the
-# Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-# 
-# The above copyright notice and this permission notice
-# shall be included in all copies or substantial portions of
-# the Software.
-# 
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
-# KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
-# WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-# PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS
-# OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-# OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-# OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-# 
+# Jesús Moreno Amor <jesus@morenoamor.com>
+# 
 ##########################################################################################
 
 ##########################################################################################
-# Configuration variables the using script must define before loading the library
-# TODO: Set default values for them
+# Configuration variables
 ##########################################################################################
-LOG_PATH=UNDEFINED
+LOG_PATH=.
 LOG_FILE=log
-LOG_LEVEL=0
+LOG_LEVEL=2
+LOG_DATEFORMAT="%Y/%m/%d %H:%M:%S"
+LOG_MESSAGEFORMAT="%-19s - %-5s - %s\n"
 
 ##########################################################################################
 # Auxiliary functions
@@ -56,14 +35,14 @@ log_debug(){
 log_info(){
   if [[ $LOG_LEVEL -le 3 ]]
   then
-    do_log "INFO " $1
+    do_log INFO $1
   fi
 }
 
 log_warning(){
   if [[ $LOG_LEVEL -le 4 ]]
   then
-    do_log "WARN " $1
+    do_log WARN $1
   fi
 }
 
@@ -85,12 +64,7 @@ log_fatal(){
 # Main function
 ##########################################################################################
 do_log(){
-  if [[ ${LOG_PATH} != "UNDEFINED" ]]
-  then
-    SEVERITY=$1
-    shift
-    echo $(date +"%Y/%m/%d %H:%M:%S") - $(printf "%-10s" ${SEVERITY}) - $* >> ${LOG_PATH}/${LOG_FILE}
-  else
-    echo $(date +"%Y/%m/%d %H:%M:%S") - ERROR - "No path defined for log file, please review documentation" >&2
-  fi
+  SEVERITY=$1
+  shift
+  printf "$LOG_MESSAGEFORMAT" "$(date +"$LOG_DATEFORMAT")" "$SEVERITY" "$*" >> $LOG_PATH/$LOG_FILE
 }
