@@ -15,6 +15,7 @@ Enjoy it
 
 Configuration variables
 -----------------------
+
 ### Default values
     LOG_PATH=.
     LOG_FILE=log
@@ -25,8 +26,10 @@ Configuration variables
 
 ### LOG_PATH
 Path where the LOG_FILE will be generated.
+
 ### LOG_FILE
 Name of the file in which the log messages will be written.
+
 ### LOG_LEVEL
 Severity threshold at which the log messages will be written to the file.
 
@@ -36,10 +39,15 @@ Severity threshold at which the log messages will be written to the file.
     3 WARN
     4 ERROR
     5 FATAL
+
 ### LOG_DATEFORMAT
 Format for the date being generated for each log message, you can use any GNU date format value as show in the date command man pages.
+
 ### LOG_MESSAGEFORMAT
 Format to be used in the printf command that generates the line, currently it supports three string values, the first being the date, the second the severity and the third the log message.
+
+### LOG_STDOUT
+Set this varibale to something not "" to also dump the log messages to the standard output
 
 Loading the library
 -------------------
@@ -47,6 +55,12 @@ As with any shell script, you can load the library by calling the source file fr
 
     # Load the logger library
     . logger.ksh
+
+    # Set needed configuration values
+    LOG_LEVEL=3
+
+    # Init the logger
+    logger_init
 
 Using the functions
 -------------------

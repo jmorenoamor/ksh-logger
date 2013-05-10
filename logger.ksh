@@ -2,8 +2,8 @@
 # KSH Logger library
 # Log generator for shell scripts
 #
-# Jesús Moreno Amor <jesus@morenoamor.com>
-# 
+# Jesus Moreno Amor <jesus@morenoamor.com>
+#
 ##########################################################################################
 
 ##########################################################################################
@@ -14,6 +14,7 @@ LOG_FILE=log
 LOG_LEVEL=2
 LOG_DATEFORMAT="%Y/%m/%d %H:%M:%S"
 LOG_MESSAGEFORMAT="%-19s - %-5s - %s\n"
+LOG_STDOUT=""
 
 ##########################################################################################
 # Auxiliary functions
@@ -63,8 +64,13 @@ log_fatal(){
 ##########################################################################################
 # Main function
 ##########################################################################################
+logger_init(){
+    [[ -d $LOG_PATH ]] || mkdir -p $LOG_PATH
+}
+
 do_log(){
   SEVERITY=$1
   shift
   printf "$LOG_MESSAGEFORMAT" "$(date +"$LOG_DATEFORMAT")" "$SEVERITY" "$*" >> $LOG_PATH/$LOG_FILE
+  [[ $LOG_STDOUT ]] && printf "$LOG_MESSAGEFORMAT" "$(date +"$LOG_DATEFORMAT")" "$SEVERITY" "$*"
 }
